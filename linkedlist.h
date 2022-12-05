@@ -5,43 +5,56 @@
 
 using namespace std;
 
-class LinkedList {
-  friend ostream &operator<<(ostream &out, LinkedList &lst);
+// Node for LinkedList
+template <class T> class Node {
+public:
+  T val;
+  Node *next;
+  explicit Node(T val = 0, Node *next = nullptr);
+};
+
+// forward declaration
+template <class T> class LinkedList;
+
+// Iterator for LinkedList
+template <class T> class LinkedListIterator {
+  //   friend class template <class K> LinkedList;
 
 private:
-  // Node for LinkedList
-  class Node {
-  public:
-    int val;
-    Node *next;
-    explicit Node(int val = 0, Node *next = nullptr);
-  };
-  // Iterator for LinkedList
-  class Iterator {
-  public:
-    LinkedList *myList;
-    Node *myNode;
-    Iterator(LinkedList *myList, Node *myNode);
-    bool operator==(const Iterator &other) const;
-    bool operator!=(const Iterator &other) const;
-    Iterator &operator++();   // preincrement
-    Iterator operator++(int); // postincrement;
-    Node *operator*();
-  };
+  LinkedList<T> *myList;
+  Node<T> *myNode;
+
+public:
+  LinkedListIterator(LinkedList<T> *myList, Node<T> *myNode);
+  bool operator==(const LinkedListIterator<T> &other) const;
+  bool operator!=(const LinkedListIterator<T> &other) const;
+  LinkedListIterator<T> &operator++();   // preincrement
+  LinkedListIterator<T> operator++(int); // postincrement;
+  Node<T> *operator*();
+};
+
+template <class T> class LinkedList {
+  template <class K>
+  friend ostream &operator<<(ostream &out, LinkedList<K> &lst);
+
+private:
   // private LinkedList variables
-  Node *head;
+  Node<T> *head;
 
 public:
   // constructor
   LinkedList();
   // add to beginning of list
-  void add(int val);
+  void add(T val);
 
   // get an iterator pointing to beginning
-  Iterator begin();
+  LinkedListIterator<T> begin();
 
   // get an iterator pointing beyon ed of list
-  Iterator end();
+  LinkedListIterator<T> end();
 };
+
+// implementation file for LinkedList
+#include "linkedlist.ipp"
 
 #endif
