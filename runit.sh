@@ -1,13 +1,8 @@
 #!/bin/bash
 
-# remove executable
-echo "Removing previous executable: rm -f ./a.out"
-rm -f ./a.out
+# shortcut to compile and run the program
 
-# compile
-echo "Compiling: clang++ -g -std=c++11 -Wall -Wextra -Wno-sign-compare *.cpp"
-clang++ -g -std=c++11 -Wall -Wextra -Wno-sign-compare *.cpp
-
-# execute
-echo "Executing: ./a.out"
+rm -f a.out
+g++ -g -Wall -Wextra -Wno-sign-compare *.cpp
 ./a.out
+
